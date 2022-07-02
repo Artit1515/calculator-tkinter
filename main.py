@@ -1,6 +1,7 @@
 from tkinter import*
 import tkinter.messagebox 
 import math
+
 app=Tk()
 app.title("calculator")
 #app.geometry("600x600")
@@ -21,23 +22,24 @@ def clear():
     dpshow.set(0)
 
 def equal():
+    sub_str ="/0"
     global ansresult
-    """if ansresult =="+" or ansresult =="-" or ansresult =="*" or ansresult =="/"or ansresult ==".":
-      for i in ansresult:
-            print(i)
-            ansresult=""
-            dpshow.set(0)
-            return"""
-    
-
     firstchar=ansresult[0]
     if firstchar == "*" or firstchar == "/" or firstchar == ")":
         ansresult=""
         dpshow.set("syntrax error")
         return
 
+    if sub_str in ansresult:
+        ansresult=""
+        dpshow.set("syntrax error")
+        return
+
+
+
     finalans=float(eval(ansresult))
     dpshow.set(str(finalans))
+    
     ansresult=str(finalans)
 
 def delete():
@@ -62,13 +64,20 @@ def root():
 dp=Entry(font=90,width=35,textvariable=dpshow,justify="right")
 dp.grid(columnspan=5)
 
+def history(ansresult):
+    app2=Tk()
+    Mylist=Listbox(app2)
+    Mylist.grid(row=0)
+    Mylist.insert(0,ansresult)
+    app2.mainloop()
+
 
 myMenu = Menu()
 app.config(menu=myMenu)
 minimenu = Menu()
 
 minimenu.add_command(label="scitific calculator mode")
-minimenu.add_command(label="history")
+minimenu.add_command(label="history",command=history)
 minimenu.add_command(label="")
 
 
